@@ -1,6 +1,6 @@
 /**
  * Clean, Smooth & Fast Romantic Story Script for Shobha & Himanshu
- * Date: 3rd November 2026
+ * Date: 4th November 2026
  * Features: Auto-surging heart, 4-photo showcase, pure love ending, crackers everywhere
  */
 
