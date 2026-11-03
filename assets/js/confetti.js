@@ -1,6 +1,6 @@
 /**
  * High-performance, lightweight canvas particle engine
- * Supports: Confetti showers, Floating Hearts, Fireworks, and Sparkles
+ * Supports: Crackers, Fireworks, Confetti, Floating Hearts, and Shooting Stars
  */
 class SurpriseEffects {
   constructor() {
@@ -18,6 +18,7 @@ class SurpriseEffects {
     this.ctx = this.canvas.getContext('2d');
     this.particles = [];
     this.running = false;
+    this.crackerInterval = null;
 
     this.resize();
     window.addEventListener('resize', () => this.resize());
@@ -28,8 +29,63 @@ class SurpriseEffects {
     this.height = this.canvas.height = window.innerHeight;
   }
 
-  // Realistic Confetti Explosion
-  confetti(x = this.width / 2, y = this.height / 2, count = 80) {
+  // Realistic Fireworks / Cracker Explosion
+  cracker(x = Math.random() * (this.width * 0.8) + (this.width * 0.1), y = Math.random() * (this.height * 0.5) + 60, count = 80) {
+    const palette = [
+      ['#ff4d8d', '#ff758c', '#ffffff'],
+      ['#ffd700', '#ff9a00', '#fff3b0'],
+      ['#00f2fe', '#4facfe', '#ffffff'],
+      ['#e056fd', '#f368e0', '#ffffff'],
+      ['#ff3838', '#ff9f1a', '#fff200']
+    ];
+    const colors = palette[Math.floor(Math.random() * palette.length)];
+
+    for (let i = 0; i < count; i++) {
+      const angle = (i / count) * Math.PI * 2 + (Math.random() - 0.5) * 0.3;
+      const speed = Math.random() * 9 + 3;
+      this.particles.push({
+        type: 'cracker-spark',
+        x: x,
+        y: y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        size: Math.random() * 3.5 + 2,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        alpha: 1,
+        decay: Math.random() * 0.02 + 0.012,
+        gravity: 0.12,
+        trail: []
+      });
+    }
+
+    // Sound effect
+    if (window.soundFx) window.soundFx.cracker();
+    this.start();
+  }
+
+  // Mega Cracker Salvo (Multiple fireworks at once)
+  megaCrackerShower(salvoCount = 6) {
+    for (let i = 0; i < salvoCount; i++) {
+      setTimeout(() => {
+        const x = Math.random() * (this.width * 0.8) + (this.width * 0.1);
+        const y = Math.random() * (this.height * 0.5) + 50;
+        this.cracker(x, y, 75);
+      }, i * 220);
+    }
+  }
+
+  // Start background ambient crackers ("crackers everywhere")
+  startAmbientCrackers() {
+    if (this.crackerInterval) return;
+    this.crackerInterval = setInterval(() => {
+      const x = Math.random() * (this.width * 0.85) + (this.width * 0.07);
+      const y = Math.random() * (this.height * 0.45) + 60;
+      this.cracker(x, y, 50);
+    }, 2800);
+  }
+
+  // Confetti Explosion
+  confetti(x = this.width / 2, y = this.height / 2, count = 90) {
     const colors = ['#ff4d8d', '#ff758c', '#ff7eb3', '#ffd700', '#ffb6c1', '#a18cd1', '#fbc2eb', '#fad0c4'];
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
@@ -44,8 +100,6 @@ class SurpriseEffects {
         color: colors[Math.floor(Math.random() * colors.length)],
         rotation: Math.random() * 360,
         rotationSpeed: (Math.random() - 0.5) * 15,
-        tilt: Math.random() * 10,
-        tiltSpeed: Math.random() * 0.1 + 0.05,
         alpha: 1,
         decay: Math.random() * 0.008 + 0.005,
         gravity: 0.28
@@ -54,19 +108,19 @@ class SurpriseEffects {
     this.start();
   }
 
-  // Romantic Floating Hearts Burst
-  heartsBurst(x = this.width / 2, y = this.height / 2, count = 30) {
+  // Romantic Hearts Burst
+  heartsBurst(x = this.width / 2, y = this.height / 2, count = 35) {
     const colors = ['#ff2a6d', '#ff5e7e', '#ff8da1', '#ff0055', '#e91e63'];
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
-      const speed = Math.random() * 7 + 2;
+      const speed = Math.random() * 8 + 3;
       this.particles.push({
         type: 'heart',
         x: x,
         y: y,
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed - 3,
-        size: Math.random() * 14 + 10,
+        size: Math.random() * 16 + 12,
         color: colors[Math.floor(Math.random() * colors.length)],
         rotation: (Math.random() - 0.5) * 45,
         alpha: 1,
@@ -77,7 +131,7 @@ class SurpriseEffects {
     this.start();
   }
 
-  // Sparkling Stars / Fairy Dust
+  // Sparkling Fairy Dust
   sparkles(x, y, count = 25) {
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
@@ -88,7 +142,7 @@ class SurpriseEffects {
         y: y,
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
-        size: Math.random() * 5 + 3,
+        size: Math.random() * 4 + 2,
         color: '#fff3b0',
         alpha: 1,
         decay: Math.random() * 0.02 + 0.015,
@@ -98,25 +152,22 @@ class SurpriseEffects {
     this.start();
   }
 
-  // Fireworks Burst
-  firework(x = Math.random() * this.width, y = Math.random() * (this.height * 0.6) + 50) {
-    const colors = ['#ff5376', '#ffb199', '#f857a6', '#ff5858', '#ffd700', '#00f2fe', '#4facfe'];
-    const chosenColor = colors[Math.floor(Math.random() * colors.length)];
-    const count = 70;
-    for (let i = 0; i < count; i++) {
-      const angle = (i / count) * Math.PI * 2 + (Math.random() - 0.5) * 0.2;
-      const speed = Math.random() * 7 + 3;
+  // Shooting Star across screen
+  shootingStar(startX = Math.random() * (this.width * 0.5), startY = Math.random() * 100) {
+    const angle = Math.PI / 4 + (Math.random() - 0.5) * 0.2;
+    const speed = 18;
+    for (let i = 0; i < 35; i++) {
       this.particles.push({
-        type: 'spark',
-        x: x,
-        y: y,
+        type: 'star-trail',
+        x: startX - (i * Math.cos(angle) * 3),
+        y: startY - (i * Math.sin(angle) * 3),
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
-        size: Math.random() * 3 + 2,
-        color: chosenColor,
-        alpha: 1,
-        decay: Math.random() * 0.015 + 0.01,
-        gravity: 0.09
+        size: Math.max(1, 4 - (i * 0.1)),
+        color: '#ffffff',
+        alpha: 1 - (i / 35),
+        decay: 0.035,
+        gravity: 0
       });
     }
     this.start();
@@ -173,17 +224,17 @@ class SurpriseEffects {
         this.ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
       } else if (p.type === 'heart') {
         this.drawHeart(this.ctx, p.x, p.y, p.size, p.color, p.alpha, p.rotation);
-      } else if (p.type === 'sparkle') {
+      } else if (p.type === 'cracker-spark') {
         this.ctx.fillStyle = p.color;
         this.ctx.shadowBlur = 8;
-        this.ctx.shadowColor = '#fff';
+        this.ctx.shadowColor = p.color;
         this.ctx.beginPath();
         this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         this.ctx.fill();
-      } else if (p.type === 'spark') {
+      } else if (p.type === 'sparkle' || p.type === 'star-trail') {
         this.ctx.fillStyle = p.color;
         this.ctx.shadowBlur = 6;
-        this.ctx.shadowColor = p.color;
+        this.ctx.shadowColor = '#fff';
         this.ctx.beginPath();
         this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         this.ctx.fill();
@@ -200,4 +251,3 @@ class SurpriseEffects {
 }
 
 window.surpriseFx = new SurpriseEffects();
-

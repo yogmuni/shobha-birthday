@@ -1,6 +1,6 @@
 /**
  * Web Audio API Sound Synthesizer
- * Produces crisp, cute sound effects procedurally with zero external asset dependencies
+ * Produces crisp sound effects procedurally (balloon pop, crackers, candle blow, chimes, heart pump)
  */
 class SoundFx {
   constructor() {
@@ -19,13 +19,59 @@ class SoundFx {
     }
   }
 
+  // Cracker / Firework Explosion Sound
+  cracker() {
+    this.init();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+
+    // Initial sharp blast (noise burst)
+    const bufferSize = this.ctx.sampleRate * 0.12;
+    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const output = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      output[i] = (Math.random() * 2 - 1) * Math.exp(-i / (this.ctx.sampleRate * 0.03));
+    }
+
+    const blast = this.ctx.createBufferSource();
+    blast.buffer = buffer;
+
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(1200, now);
+    filter.frequency.exponentialRampToValueAtTime(100, now + 0.12);
+
+    const gain = this.ctx.createGain();
+    gain.gain.setValueAtTime(0.7, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+
+    blast.connect(filter);
+    filter.connect(gain);
+    gain.connect(this.ctx.destination);
+    blast.start(now);
+
+    // Deep sub-bass boom
+    const osc = this.ctx.createOscillator();
+    const oscGain = this.ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(160, now);
+    osc.frequency.exponentialRampToValueAtTime(30, now + 0.25);
+
+    oscGain.gain.setValueAtTime(0.5, now);
+    oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+
+    osc.connect(oscGain);
+    oscGain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.26);
+  }
+
   // Balloon Pop Sound
   pop() {
     this.init();
     if (!this.ctx) return;
     const now = this.ctx.currentTime;
     
-    // Noise buffer for snap
     const bufferSize = this.ctx.sampleRate * 0.04;
     const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
     const output = buffer.getChannelData(0);
@@ -48,10 +94,8 @@ class SoundFx {
     whiteNoise.connect(filter);
     filter.connect(gain);
     gain.connect(this.ctx.destination);
-
     whiteNoise.start(now);
 
-    // Cute tonal pop thud
     const osc = this.ctx.createOscillator();
     const oscGain = this.ctx.createGain();
     osc.type = 'sine';
@@ -63,12 +107,32 @@ class SoundFx {
 
     osc.connect(oscGain);
     oscGain.connect(this.ctx.destination);
-
     osc.start(now);
     osc.stop(now + 0.08);
   }
 
-  // Candle Blow Sound (Gentle breath whoosh)
+  // Heart Grows / Pumps Sound
+  heartGrow(pitch = 1) {
+    this.init();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(80 * pitch, now);
+    osc.frequency.exponentialRampToValueAtTime(220 * pitch, now + 0.18);
+
+    gain.gain.setValueAtTime(0.4, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.23);
+  }
+
+  // Candle Blow Sound
   blowCandle() {
     this.init();
     if (!this.ctx) return;
@@ -97,12 +161,11 @@ class SoundFx {
     noise.connect(filter);
     filter.connect(gain);
     gain.connect(this.ctx.destination);
-
     noise.start(now);
   }
 
   // Magical Sparkle Chime
-  chime(notes = [523.25, 659.25, 783.99, 1046.50]) { // C5, E5, G5, C6
+  chime(notes = [523.25, 659.25, 783.99, 1046.50]) {
     this.init();
     if (!this.ctx) return;
     const now = this.ctx.currentTime;
@@ -121,13 +184,11 @@ class SoundFx {
 
       osc.connect(gain);
       gain.connect(this.ctx.destination);
-
       osc.start(startTime);
       osc.stop(startTime + 0.55);
     });
   }
 
-  // Love Heartbeat
   heartbeat() {
     this.init();
     if (!this.ctx) return;
@@ -145,7 +206,6 @@ class SoundFx {
 
       osc.connect(gain);
       gain.connect(this.ctx.destination);
-
       osc.start(time);
       osc.stop(time + 0.13);
     };
@@ -153,40 +213,6 @@ class SoundFx {
     playThump(now, 100, 0.4);
     playThump(now + 0.15, 90, 0.3);
   }
-
-  // Paper Unfolding / Envelope Open
-  openEnvelope() {
-    this.init();
-    if (!this.ctx) return;
-    const now = this.ctx.currentTime;
-    const duration = 0.25;
-    const bufferSize = this.ctx.sampleRate * duration;
-    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-      data[i] = (Math.random() * 2 - 1) * 0.2;
-    }
-
-    const noise = this.ctx.createBufferSource();
-    noise.buffer = buffer;
-
-    const filter = this.ctx.createBiquadFilter();
-    filter.type = 'bandpass';
-    filter.frequency.setValueAtTime(1200, now);
-    filter.Q.setValueAtTime(2, now);
-
-    const gain = this.ctx.createGain();
-    gain.gain.setValueAtTime(0.01, now);
-    gain.gain.linearRampToValueAtTime(0.2, now + 0.08);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
-
-    noise.connect(filter);
-    filter.connect(gain);
-    gain.connect(this.ctx.destination);
-
-    noise.start(now);
-  }
 }
 
 window.soundFx = new SoundFx();
-
