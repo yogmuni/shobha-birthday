@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Happy Birthday Shobha 🎂✨ | A Special Surprise</title>
+  <link rel="stylesheet" href="assets/css/shared.css">
+  <link rel="stylesheet" href="assets/css/storybook.css">
+</head>
+<body>
+  <!-- Ambient Hearts Background -->
+  <div class="ambient-bg"></div>
+
+  <!-- Navigation Back -->
+  <div class="top-nav-bar">
+    <a href="index.html" class="back-home-btn">← All Surprise Themes</a>
+  </div>
+
+  <div class="storybook-container">
+
+    <!-- STAGE 0: The Sealed Wax Envelope -->
+    <div class="stage active" id="stage-0">
+      <h1 class="romantic-title">Happy Birthday, Shobha</h1>
+      <p class="romantic-subtitle">A special surprise for my beautiful wife...</p>
+
+      <div class="envelope-wrapper" id="envelope">
+        <div class="envelope">
+          <div class="envelope-flap"></div>
+          <div class="wax-seal">💌</div>
+          <div class="envelope-letter-preview">
+            <span style="font-size: 26px;">🎂</span>
+            <p style="font-family: 'Playfair Display', serif; font-size: 14px; color: #ff5e7e; margin-top: 6px;">For My Wife Shobha</p>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-romantic" id="btn-open-envelope" onclick="document.getElementById('envelope').click()">
+        Tap To Open With Love ✨
+      </button>
+      <p style="font-size: 12px; color: #a18c94; margin-top: 14px;">(Turn your volume up for the sweet music 🎶)</p>
+    </div>
+
+    <!-- STAGE 1: Birthday Cake & Wish -->
+    <div class="stage" id="stage-1">
+      <h1 class="romantic-title">Make a Birthday Wish</h1>
+      <p class="romantic-subtitle">Close your eyes, make a wish from your heart, and blow out the candles 🕯️</p>
+
+      <div class="cake-container">
+        <!-- Candles -->
+        <div class="candles-row">
+          <div class="candle">
+            <div class="candle-wick"></div>
+            <div class="flame"></div>
+            <div class="smoke-puff"></div>
+          </div>
+          <div class="candle">
+            <div class="candle-wick"></div>
+            <div class="flame"></div>
+            <div class="smoke-puff"></div>
+          </div>
+          <div class="candle">
+            <div class="candle-wick"></div>
+            <div class="flame"></div>
+            <div class="smoke-puff"></div>
+          </div>
+        </div>
+
+        <!-- Top Tier -->
+        <div class="cake-tier-top">
+          <div class="cake-frosting"></div>
+          <div class="strawberries">
+            <span class="strawberry">🍓</span>
+            <span class="strawberry">🍓</span>
+            <span class="strawberry">🍓</span>
+          </div>
+        </div>
+
+        <!-- Bottom Tier -->
+        <div class="cake-tier-bottom">
+          <div class="cake-frosting"></div>
+        </div>
+
+        <!-- Plate -->
+        <div class="cake-plate"></div>
+      </div>
+
+      <button class="btn-romantic" id="btn-blow-candles">
+        Blow Out The Candles 🌬️✨
+      </button>
+
+      <div id="after-cake-section" style="display: none; margin-top: 25px;">
+        <p style="font-family: 'Caveat', cursive; font-size: 26px; color: #ff4071; margin-bottom: 16px;">
+          May all your secret wishes and sweetest dreams come true, my love! 💖
+        </p>
+        <button class="btn-romantic" id="btn-cake-next">
+          Step Inside Our Surprise 🎈→
+        </button>
+      </div>
+    </div>
+
+    <!-- STAGE 2: Balloon Popping Game -->
+    <div class="stage" id="stage-2">
+      <h1 class="romantic-title">Pop The Balloons</h1>
+      <p class="romantic-subtitle">Tap each balloon to reveal 4 sweet reasons why you own my heart 🎈</p>
+
+      <div class="balloons-grid">
+        <!-- Balloon 1 -->
+        <div class="balloon-item">
+          <div class="balloon-bubble">Pop 1</div>
+          <div class="balloon-string"></div>
+          <div class="balloon-revealed-card">
+            <div class="secret-title">Secret #1 ☀️</div>
+            <div class="secret-text">"Your smile is my daily dose of peace and pure joy. Just seeing you happy makes everything right."</div>
+          </div>
+        </div>
+
+        <!-- Balloon 2 -->
+        <div class="balloon-item">
+          <div class="balloon-bubble">Pop 2</div>
+          <div class="balloon-string"></div>
+          <div class="balloon-revealed-card">
+            <div class="secret-title">Secret #2 🥺</div>
+            <div class="secret-text">"The way you understand my unspoken words. With you, I never have to pretend — you are home."</div>
+          </div>
+        </div>
+
+        <!-- Balloon 3 -->
+        <div class="balloon-item">
+          <div class="balloon-bubble">Pop 3</div>
+          <div class="balloon-string"></div>
+          <div class="balloon-revealed-card">
+            <div class="secret-title">Secret #3 ✨</div>
+            <div class="secret-text">"Your kindness and elegance. You make the whole world a softer, brighter place just by being in it."</div>
+          </div>
+        </div>
+
+        <!-- Balloon 4 -->
+        <div class="balloon-item">
+          <div class="balloon-bubble">Pop 4</div>
+          <div class="balloon-string"></div>
+          <div class="balloon-revealed-card">
+            <div class="secret-title">Secret #4 💍</div>
+            <div class="secret-text">"To my beautiful wife Shobha — my greatest blessing is loving you for a lifetime and beyond."</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px;">
+        <button class="btn-romantic" id="btn-balloons-next" style="display: none;">
+          Walk Down Memory Lane 📸→
+        </button>
+      </div>
+    </div>
+
+    <!-- STAGE 3: Polaroid Photo Memories -->
+    <div class="stage" id="stage-3">
+      <h1 class="romantic-title">Our Precious Moments</h1>
+      <p class="romantic-subtitle">Tap each polaroid to turn it around and read my heart 📷</p>
+
+      <div class="polaroids-container">
+        <!-- Polaroid 1 -->
+        <div class="polaroid-card">
+          <div class="polaroid-inner">
+            <div class="polaroid-front">
+              <div class="polaroid-tape"></div>
+              <div class="polaroid-img-wrapper">
+                <img src="assets/photos/photo1.jpeg" alt="Our Memory 1">
+              </div>
+              <div class="polaroid-caption">My favorite person in the whole universe 🌸</div>
+              <div class="flip-hint">Tap to flip ↺</div>
+            </div>
+            <div class="polaroid-back">
+              <h4>To My Dearest ❤️</h4>
+              <p>"Every time I look at this picture, I remember why I fell in love with you. Your laughter is my melody."</p>
+              <div class="flip-hint">Tap to flip back ↻</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Polaroid 2 -->
+        <div class="polaroid-card">
+          <div class="polaroid-inner">
+            <div class="polaroid-front">
+              <div class="polaroid-tape"></div>
+              <div class="polaroid-img-wrapper">
+                <img src="assets/photos/photo2.jpeg" alt="Our Memory 2">
+              </div>
+              <div class="polaroid-caption">To my wife Shobha — forever yours 💍✨</div>
+              <div class="flip-hint">Tap to flip ↺</div>
+            </div>
+            <div class="polaroid-back">
+              <h4>My Forever Promise 💍</h4>
+              <p>"I can't wait to walk hand in hand into all our tomorrows together. You are my dream come true."</p>
+              <div class="flip-hint">Tap to flip back ↻</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-romantic" id="btn-polaroids-next">
+        Read Your Birthday Love Letter 💌→
+      </button>
+    </div>
+
+    <!-- STAGE 4: Unfolding Love Letter -->
+    <div class="stage" id="stage-4">
+      <h1 class="romantic-title">A Letter For You</h1>
+      <p class="romantic-subtitle">Written straight from my heart to yours...</p>
+
+      <div class="letter-box">
+        <div class="letter-date">November 2026 • Your Special Day</div>
+        <div class="letter-greeting">My Dearest Wife Shobha,</div>
+        <div class="letter-body" id="typewriter-letter-body"></div>
+        <div class="letter-signature">Forever Yours,<br>Himanshu ❤️</div>
+      </div>
+
+      <div class="interactive-kisses-btn">
+        <button class="btn-romantic" id="btn-send-kisses">
+          Send Him A Kiss Back 💋
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/audio_effects.js"></script>
+  <script src="assets/js/confetti.js"></script>
+  <script src="assets/js/music_controller.js"></script>
+  <script src="assets/js/storybook.js"></script>
+</body>
+</html>
+

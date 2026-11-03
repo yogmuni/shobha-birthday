@@ -1,0 +1,417 @@
+/* Experience 2: Vintage Vinyl & Fairy Light Aesthetic Styles */
+
+:root {
+  --vinyl-dark: #121013;
+  --vinyl-card: #1c181f;
+  --vinyl-gold: #f6d365;
+  --fairy-glow: rgba(255, 234, 167, 0.85);
+  --accent-rose: #ff758c;
+}
+
+body.vinyl-theme {
+  background-color: var(--vinyl-dark);
+  color: #f7eff2;
+  overflow-x: hidden;
+}
+
+.vinyl-theme .ambient-bg {
+  background: radial-gradient(circle at 50% 20%, rgba(255, 117, 140, 0.15) 0%, transparent 60%),
+              radial-gradient(circle at 80% 80%, rgba(246, 211, 101, 0.1) 0%, transparent 50%),
+              linear-gradient(180deg, #18141b 0%, #100e12 100%);
+}
+
+.vinyl-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 90px 20px 100px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Fairy Lights Wire & Bulbs */
+.fairy-lights-wire {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  margin-bottom: 20px;
+}
+
+.wire-svg {
+  width: 100%;
+  height: 60px;
+}
+
+.bulbs-row {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 0 20px;
+  pointer-events: none;
+}
+
+.bulb {
+  width: 14px;
+  height: 20px;
+  border-radius: 50% 50% 40% 40%;
+  background: #fff4cc;
+  box-shadow: 0 0 15px 4px var(--fairy-glow), 0 0 30px var(--fairy-glow);
+  animation: bulbGlow 2.5s infinite alternate ease-in-out;
+}
+
+.bulb:nth-child(2n) { animation-delay: 0.7s; background: #ffe0e6; box-shadow: 0 0 15px 4px rgba(255, 182, 193, 0.8); }
+.bulb:nth-child(3n) { animation-delay: 1.4s; background: #fff8db; }
+
+@keyframes bulbGlow {
+  0% { opacity: 0.65; transform: scale(0.92); }
+  100% { opacity: 1; transform: scale(1.08); }
+}
+
+/* Clothesline Polaroid Gallery */
+.hanging-gallery {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin: 20px 0 50px;
+}
+
+.hanging-photo-item {
+  position: relative;
+  cursor: pointer;
+  transform-origin: top center;
+  animation: photoSway 4s ease-in-out infinite alternate;
+  transition: transform 0.3s;
+}
+
+.hanging-photo-item:nth-child(2) {
+  animation-delay: -2s;
+}
+
+.hanging-photo-item:hover {
+  animation-play-state: paused;
+  transform: scale(1.04) rotate(0deg) !important;
+  z-index: 20;
+}
+
+@keyframes photoSway {
+  0% { transform: rotate(-2.5deg); }
+  100% { transform: rotate(2.5deg); }
+}
+
+.clothespin {
+  position: absolute;
+  top: -18px;
+  left: calc(50% - 7px);
+  width: 14px;
+  height: 28px;
+  background: #c89666;
+  border-radius: 3px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+  z-index: 5;
+}
+
+.clothespin::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 1px;
+  width: 12px;
+  height: 4px;
+  background: #8b5a2b;
+  border-radius: 1px;
+}
+
+.vintage-polaroid {
+  background: #ffffff;
+  padding: 14px 14px 22px;
+  border-radius: 4px;
+  width: 250px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+}
+
+.vintage-polaroid img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.vintage-polaroid-caption {
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  color: #1a171a;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Turntable Player */
+.turntable-box {
+  background: #1c1822;
+  border: 1px solid rgba(255, 117, 140, 0.25);
+  border-radius: 24px;
+  padding: 35px 30px;
+  max-width: 550px;
+  margin: 30px auto;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.turntable-deck {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  background: #141118;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 8px 25px rgba(0,0,0,0.5);
+  border: 4px solid #2a2433;
+}
+
+.vinyl-record {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #0e0d10 20%, #201d24 35%, #0e0d10 50%, #201d24 65%, #0e0d10 80%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+  position: relative;
+}
+
+.vinyl-record.spinning {
+  animation: spinVinyl 3.5s linear infinite;
+}
+
+@keyframes spinVinyl {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.vinyl-center-label {
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+  background: #ff5e7e;
+  background-image: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  padding: 8px;
+}
+
+.vinyl-center-label span.song-label-title {
+  font-size: 9px;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.vinyl-center-label span.song-label-sub {
+  font-size: 8px;
+  color: #ffe3e8;
+  margin-top: 2px;
+}
+
+.vinyl-spindle-hole {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #141118;
+  margin-top: 4px;
+  border: 1px solid #444;
+}
+
+/* Tonearm */
+.tonearm {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 70px;
+  height: 140px;
+  transform-origin: top right;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: rotate(-25deg);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.tonearm.playing {
+  transform: rotate(5deg);
+}
+
+.tonearm-base {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #504859;
+  border: 2px solid #8b7f96;
+}
+
+.tonearm-rod {
+  position: absolute;
+  top: 14px;
+  right: 12px;
+  width: 4px;
+  height: 110px;
+  background: #b5a9c2;
+  border-radius: 2px;
+}
+
+.tonearm-head {
+  position: absolute;
+  bottom: 0;
+  left: 2px;
+  width: 14px;
+  height: 24px;
+  background: #ff5e7e;
+  border-radius: 3px;
+  transform: rotate(15deg);
+}
+
+/* Audio Visualizer Waves */
+.visualizer-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 25px;
+  margin-top: 20px;
+}
+
+.v-bar {
+  width: 4px;
+  background: #ff758c;
+  border-radius: 2px;
+  height: 4px;
+  transition: height 0.15s ease;
+}
+
+.v-bar.active {
+  animation: jumpBar 0.5s ease-in-out infinite alternate;
+}
+
+.v-bar:nth-child(1) { animation-delay: 0.1s; }
+.v-bar:nth-child(2) { animation-delay: 0.3s; }
+.v-bar:nth-child(3) { animation-delay: 0.15s; }
+.v-bar:nth-child(4) { animation-delay: 0.4s; }
+.v-bar:nth-child(5) { animation-delay: 0.25s; }
+.v-bar:nth-child(6) { animation-delay: 0.35s; }
+.v-bar:nth-child(7) { animation-delay: 0.05s; }
+
+@keyframes jumpBar {
+  0% { height: 4px; }
+  100% { height: 24px; }
+}
+
+/* Scratch Card Area */
+.scratch-section {
+  background: #1c1822;
+  border: 1px solid rgba(255, 117, 140, 0.2);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 460px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.scratch-canvas-container {
+  position: relative;
+  width: 320px;
+  height: 160px;
+  margin: 20px auto 10px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}
+
+.scratch-secret-message {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+.scratch-secret-message h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 19px;
+  margin-bottom: 6px;
+}
+
+.scratch-secret-message p {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+#scratch-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  z-index: 2;
+}
+
+/* Milestone Cards */
+.milestones-deck {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.milestone-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 117, 140, 0.25);
+  border-radius: 16px;
+  padding: 20px 24px;
+  min-width: 220px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+
+.milestone-item .m-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.milestone-item .m-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #ff8da1;
+  letter-spacing: 1px;
+}
+
+.milestone-item .m-value {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  color: #ffffff;
+  margin-top: 4px;
+}
+

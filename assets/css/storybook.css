@@ -1,0 +1,543 @@
+/* Storybook & Interactive KoiKoi Edition Styles */
+
+.storybook-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 80px 20px 100px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+}
+
+/* Multi-stage wrapper */
+.stage {
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  animation: stageFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.stage.active {
+  display: flex;
+}
+
+@keyframes stageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* STAGE 0: Sealed Envelope */
+.envelope-wrapper {
+  position: relative;
+  cursor: pointer;
+  margin: 40px auto;
+  transition: transform 0.3s;
+}
+
+.envelope-wrapper:hover {
+  transform: scale(1.03);
+}
+
+.envelope {
+  position: relative;
+  width: 280px;
+  height: 190px;
+  background: #ffecf0;
+  border-radius: 12px;
+  box-shadow: 0 15px 35px rgba(255, 94, 126, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ffccd5;
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 140px solid transparent;
+  border-right: 140px solid transparent;
+  border-top: 105px solid #ffccd5;
+  transform-origin: top;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 3;
+}
+
+.envelope.open .envelope-flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.wax-seal {
+  position: absolute;
+  top: 75px;
+  left: calc(50% - 24px);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ff2a6d, #c2185b);
+  box-shadow: 0 4px 10px rgba(194, 24, 91, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  z-index: 4;
+  transition: all 0.4s;
+}
+
+.envelope.open .wax-seal {
+  transform: scale(0);
+  opacity: 0;
+}
+
+.envelope-letter-preview {
+  position: absolute;
+  width: 240px;
+  height: 150px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  top: 20px;
+  transition: transform 0.6s 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.envelope.open .envelope-letter-preview {
+  transform: translateY(-80px);
+}
+
+/* STAGE 1: Interactive Birthday Cake */
+.cake-container {
+  margin: 30px auto;
+  position: relative;
+  width: 250px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.cake-plate {
+  width: 260px;
+  height: 16px;
+  background: #f1f2f6;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.cake-tier-bottom {
+  width: 200px;
+  height: 70px;
+  background: linear-gradient(to right, #ffd1dc, #ffccd5, #ffb6c1);
+  border-radius: 12px 12px 0 0;
+  position: relative;
+  box-shadow: inset 0 -6px 0 rgba(0,0,0,0.05);
+}
+
+.cake-tier-top {
+  width: 140px;
+  height: 60px;
+  background: linear-gradient(to right, #fff0f3, #ffe3e8, #ffd1dc);
+  border-radius: 12px 12px 0 0;
+  position: relative;
+  margin-bottom: -4px;
+}
+
+.cake-frosting {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 18px;
+  background: #ffffff;
+  border-radius: 12px 12px 10px 10px;
+}
+
+.strawberries {
+  position: absolute;
+  top: -12px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 0 15px;
+}
+
+.strawberry {
+  font-size: 16px;
+}
+
+.candles-row {
+  position: absolute;
+  top: -46px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+}
+
+.candle {
+  width: 10px;
+  height: 38px;
+  background: repeating-linear-gradient(45deg, #ff8da1, #ff8da1 6px, #ffffff 6px, #ffffff 12px);
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+}
+
+.candle-wick {
+  position: absolute;
+  top: -6px;
+  left: 4px;
+  width: 2px;
+  height: 6px;
+  background: #444;
+}
+
+.flame {
+  position: absolute;
+  top: -22px;
+  left: 0px;
+  width: 10px;
+  height: 18px;
+  background: radial-gradient(ellipse at bottom, #fff700 0%, #ff8c00 60%, transparent 80%);
+  border-radius: 50% 50% 20% 20%;
+  animation: flicker 0.6s infinite alternate ease-in-out;
+  box-shadow: 0 0 16px #ffb300, 0 0 30px #ff6600;
+  cursor: pointer;
+  transition: opacity 0.4s, transform 0.4s;
+}
+
+.flame.blown-out {
+  opacity: 0;
+  transform: scale(0.2) translateY(-10px);
+  pointer-events: none;
+}
+
+@keyframes flicker {
+  0% { transform: scale(1) rotate(-2deg); }
+  100% { transform: scale(1.15) rotate(3deg); }
+}
+
+.smoke-puff {
+  position: absolute;
+  top: -30px;
+  left: 2px;
+  width: 6px;
+  height: 6px;
+  background: rgba(180, 180, 180, 0.6);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.smoke-puff.rise {
+  animation: smokeRise 1.2s ease-out forwards;
+}
+
+@keyframes smokeRise {
+  0% { opacity: 0.8; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-30px) scale(3.5); }
+}
+
+/* STAGE 2: Balloon Popping Game */
+.balloons-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  margin: 35px auto 25px;
+  max-width: 650px;
+}
+
+.balloon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.balloon-item:hover {
+  transform: translateY(-8px) scale(1.05);
+}
+
+.balloon-bubble {
+  width: 85px;
+  height: 105px;
+  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+  position: relative;
+  box-shadow: inset -8px -8px 15px rgba(0, 0, 0, 0.12), 0 10px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  animation: balloonFloat 3s ease-in-out infinite alternate;
+}
+
+.balloon-item:nth-child(1) .balloon-bubble { background: linear-gradient(135deg, #ff758c, #ff7eb3); animation-delay: 0s; }
+.balloon-item:nth-child(2) .balloon-bubble { background: linear-gradient(135deg, #b19ffb, #a18cd1); animation-delay: 0.5s; }
+.balloon-item:nth-child(3) .balloon-bubble { background: linear-gradient(135deg, #ff9a9e, #fecfef); animation-delay: 1s; }
+.balloon-item:nth-child(4) .balloon-bubble { background: linear-gradient(135deg, #fbc2eb, #a6c1ee); animation-delay: 1.5s; }
+
+@keyframes balloonFloat {
+  0% { transform: translateY(0px) rotate(-1deg); }
+  100% { transform: translateY(-12px) rotate(2deg); }
+}
+
+.balloon-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: calc(50% - 5px);
+  width: 10px;
+  height: 8px;
+  background: inherit;
+  border-radius: 3px;
+}
+
+.balloon-string {
+  width: 2px;
+  height: 45px;
+  background: rgba(0, 0, 0, 0.18);
+  margin-top: 5px;
+}
+
+.balloon-revealed-card {
+  display: none;
+  background: #ffffff;
+  padding: 16px 20px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid #ffd0d8;
+  max-width: 280px;
+  text-align: center;
+  animation: popCard 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popCard {
+  0% { transform: scale(0.4); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.balloon-revealed-card .secret-title {
+  color: #ff4071;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.balloon-revealed-card .secret-text {
+  font-size: 15px;
+  color: #3a2e33;
+  line-height: 1.4;
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+}
+
+/* STAGE 3: Polaroid Photo Memories */
+.polaroids-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 35px;
+  margin: 35px auto;
+  perspective: 1000px;
+}
+
+.polaroid-card {
+  width: 270px;
+  height: 380px;
+  cursor: pointer;
+  perspective: 1000px;
+  transition: transform 0.3s;
+}
+
+.polaroid-card:hover {
+  transform: translateY(-8px) scale(1.03);
+}
+
+.polaroid-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  border-radius: 6px;
+}
+
+.polaroid-card.flipped .polaroid-inner {
+  transform: rotateY(180deg);
+}
+
+.polaroid-front, .polaroid-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 16px 16px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.polaroid-tape {
+  position: absolute;
+  top: -12px;
+  left: calc(50% - 35px);
+  width: 70px;
+  height: 24px;
+  background: rgba(255, 230, 200, 0.7);
+  backdrop-filter: blur(2px);
+  transform: rotate(-3deg);
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+  z-index: 10;
+}
+
+.polaroid-img-wrapper {
+  width: 100%;
+  height: 270px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #f0e6e8;
+}
+
+.polaroid-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+.polaroid-card:hover .polaroid-img-wrapper img {
+  transform: scale(1.04);
+}
+
+.polaroid-caption {
+  margin-top: 14px;
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  color: #3a2e33;
+  text-align: center;
+}
+
+.polaroid-back {
+  transform: rotateY(180deg);
+  background: #fffdfa;
+  border: 1px solid #fae1dd;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.polaroid-back h4 {
+  font-family: 'Playfair Display', serif;
+  color: #ff4071;
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.polaroid-back p {
+  font-family: 'Caveat', cursive;
+  font-size: 21px;
+  color: #4a3b40;
+  line-height: 1.5;
+}
+
+.flip-hint {
+  font-size: 11px;
+  color: #ff758c;
+  margin-top: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* STAGE 4: Unfolding Love Letter */
+.letter-box {
+  background: #fffdf8;
+  border: 1px solid #f3d7dc;
+  border-radius: 18px;
+  padding: 40px 35px;
+  max-width: 620px;
+  margin: 30px auto;
+  box-shadow: 0 15px 40px rgba(255, 94, 126, 0.15);
+  position: relative;
+  text-align: left;
+}
+
+.letter-box::before {
+  content: '💌';
+  position: absolute;
+  top: -20px;
+  left: calc(50% - 20px);
+  font-size: 30px;
+  background: white;
+  border-radius: 50%;
+  padding: 4px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.letter-date {
+  font-size: 13px;
+  color: #a08c93;
+  text-align: right;
+  margin-bottom: 15px;
+  font-family: 'Playfair Display', serif;
+}
+
+.letter-greeting {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  color: #ff4071;
+  margin-bottom: 18px;
+}
+
+.letter-body {
+  font-family: 'Caveat', cursive;
+  font-size: 22px;
+  color: #382c31;
+  line-height: 1.7;
+  min-height: 180px;
+  white-space: pre-line;
+}
+
+.letter-signature {
+  margin-top: 25px;
+  font-family: 'Sacramento', cursive;
+  font-size: 34px;
+  color: #ff4071;
+  text-align: right;
+}
+
+.interactive-kisses-btn {
+  margin-top: 25px;
+}
+
