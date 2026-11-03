@@ -1,7 +1,7 @@
 /* Master Playful Story CSS */
 
 .story-container {
-  max-width: 840px;
+  max-width: 920px;
   margin: 0 auto;
   padding: 60px 20px 100px;
   min-height: 100vh;
@@ -154,7 +154,7 @@
   height: 110px;
   fill: #ff3366;
   filter: drop-shadow(0 0 15px rgba(255, 51, 102, 0.6));
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.4s;
 }
 
 .g-heart-svg.pumping {
@@ -200,45 +200,137 @@
   padding: 0 20px;
 }
 
-/* Scene 3: Forbidden Button */
-.forbidden-box {
-  background: white;
-  border-radius: 24px;
-  padding: 40px 25px;
-  box-shadow: 0 15px 45px rgba(255, 94, 126, 0.2);
-  border: 2px dashed #ff4d6d;
-  max-width: 500px;
+/* 4-Photo Polaroid Grid */
+.photos-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
   width: 100%;
-  margin: 30px auto;
+  margin: 25px 0 40px;
 }
 
-.btn-forbidden {
-  background: linear-gradient(135deg, #ff1744, #d50000);
-  color: white;
-  border: none;
-  padding: 16px 36px;
-  border-radius: 50px;
-  font-size: 17px;
-  font-weight: 800;
+.polaroid-item-wrap {
+  perspective: 1000px;
   cursor: pointer;
-  box-shadow: 0 8px 25px rgba(213, 0, 0, 0.4);
-  transition: all 0.25s;
-  letter-spacing: 0.5px;
+  transition: transform 0.3s;
 }
 
-.btn-forbidden:hover {
-  transform: scale(1.06);
-  box-shadow: 0 12px 30px rgba(213, 0, 0, 0.5);
+.polaroid-item-wrap:hover {
+  transform: translateY(-6px) scale(1.03);
 }
 
-/* Grand Finale Layout */
-.finale-section {
+.polaroid-card-4 {
+  background: white;
+  border-radius: 8px;
+  padding: 12px 12px 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  border: 1px solid #f2e2e6;
+  position: relative;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+}
+
+.polaroid-item-wrap.flipped .polaroid-card-4 {
+  transform: rotateY(180deg);
+}
+
+.polaroid-front-4, .polaroid-back-4 {
+  backface-visibility: hidden;
   width: 100%;
-  margin-top: 35px;
 }
 
-.cake-box-finale {
+.polaroid-front-4 img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.polaroid-caption-4 {
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  color: #2d2629;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.polaroid-back-4 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #fffdf9;
+  padding: 25px 15px;
+  border-radius: 8px;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.polaroid-back-4 h4 {
+  font-family: 'Playfair Display', serif;
+  color: #ff3366;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.polaroid-back-4 p {
+  font-family: 'Caveat', cursive;
+  font-size: 19px;
+  color: #382c31;
+  line-height: 1.4;
+}
+
+/* Himanshu's Royal Love Card */
+.royal-love-card {
+  background: #fffdf8;
+  border: 2px solid #ffccd5;
+  border-radius: 24px;
+  padding: 40px 30px;
+  box-shadow: 0 15px 45px rgba(255, 94, 126, 0.2);
+  max-width: 650px;
   margin: 30px auto;
+  position: relative;
+  text-align: left;
+}
+
+.royal-love-card::before {
+  content: '💍';
+  position: absolute;
+  top: -20px;
+  left: calc(50% - 20px);
+  font-size: 28px;
+  background: white;
+  border-radius: 50%;
+  padding: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.royal-header {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: #ff3366;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.royal-text {
+  font-family: 'Caveat', cursive;
+  font-size: 23px;
+  color: #382c31;
+  line-height: 1.7;
+}
+
+.royal-sign {
+  font-family: 'Sacramento', cursive;
+  font-size: 34px;
+  color: #ff3366;
+  text-align: right;
+  margin-top: 20px;
 }
 
 /* Fireworks Cannon Banner */
@@ -248,8 +340,7 @@
   border: 1px solid rgba(255, 117, 140, 0.35);
   border-radius: 20px;
   padding: 22px;
-  margin: 35px auto 20px;
+  margin: 30px auto 15px;
   max-width: 540px;
   box-shadow: var(--shadow-md);
 }
-
