@@ -212,4 +212,91 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 2500);
     });
   }
+
+  // 5. 1-by-1 Photo + Letter Interactive Features
+  // a) Photo 3D Flip
+  document.querySelectorAll('.btn-photo-flip, .btn-flip-back-close').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const wrap = btn.closest('.polaroid-wrapper');
+      if (wrap) {
+        wrap.classList.toggle('is-flipped');
+        if (window.soundFx) window.soundFx.heartbeat();
+        if (window.surpriseFx) {
+          const rect = wrap.getBoundingClientRect();
+          surpriseFx.sparkles(rect.left + rect.width / 2, rect.top + rect.height / 2, 20);
+        }
+      }
+    });
+  });
+
+  // Clicking on polaroid itself (except buttons) can also flip
+  document.querySelectorAll('.polaroid-wrapper').forEach(wrap => {
+    wrap.addEventListener('click', (e) => {
+      if (e.target.closest('button')) return;
+      wrap.classList.toggle('is-flipped');
+      if (window.soundFx) window.soundFx.heartbeat();
+      if (window.surpriseFx) {
+        const rect = wrap.getBoundingClientRect();
+        surpriseFx.sparkles(rect.left + rect.width / 2, rect.top + rect.height / 2, 18);
+      }
+    });
+  });
+
+  // b) Photo Like Button (+1000 loves, bursts floating hearts)
+  document.querySelectorAll('.btn-photo-like').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      let count = parseInt(btn.getAttribute('data-count') || '10000', 10);
+      count += 1000;
+      btn.setAttribute('data-count', count);
+      const label = btn.querySelector('.like-label');
+      if (label) label.textContent = `${count.toLocaleString()} Loves ❤️`;
+
+      if (window.soundFx) window.soundFx.chime();
+      if (window.surpriseFx) {
+        const rect = btn.getBoundingClientRect();
+        surpriseFx.heartsBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 25);
+      }
+    });
+  });
+
+  // c) Wax Seal & Secret P.S. Dropdown
+  document.querySelectorAll('.btn-toggle-secret-ps, .wax-seal-badge').forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const parentCard = trigger.closest('.letter-parchment-card');
+      if (parentCard) {
+        const psBox = parentCard.querySelector('.secret-ps-box');
+        if (psBox) {
+          psBox.classList.toggle('open');
+          if (psBox.classList.contains('open')) {
+            if (window.soundFx) window.soundFx.chime();
+            if (window.surpriseFx) {
+              const rect = psBox.getBoundingClientRect();
+              surpriseFx.sparkles(rect.left + rect.width / 2, rect.top + rect.height / 2, 15);
+            }
+          }
+        }
+      }
+    });
+  });
+
+  // d) Smooth Chapter Navigation & Next Chapter buttons
+  document.querySelectorAll('.btn-next-chapter, .chapter-pill').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = btn.getAttribute('data-target') || btn.getAttribute('href');
+      if (targetId) {
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (window.soundFx) window.soundFx.heartbeat();
+          if (window.surpriseFx) {
+            surpriseFx.sparkles(window.innerWidth / 2, window.innerHeight * 0.3, 15);
+          }
+        }
+      }
+    });
+  });
 });
