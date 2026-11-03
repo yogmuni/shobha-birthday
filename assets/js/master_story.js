@@ -10,8 +10,29 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('step-0'), // 1-Tap Start
     document.getElementById('step-1'), // Funny Identity Check
     document.getElementById('step-2'), // Auto-Surging Heart Love Meter
-    document.getElementById('step-3')  // Grand Finale (Cake + 4 Photos + Royal Love Tribute + Crackers)
+    document.getElementById('step-3'), // Grand Finale (Cake + Photos Thrown On Table)
+    document.getElementById('step-4')  // Dedicated Step 4: Himanshu's Final Royal Letter & Vow
   ];
+
+  function triggerPhotoToss() {
+    const surface = document.getElementById('photo-table');
+    if (!surface) return;
+    surface.classList.remove('thrown');
+    void surface.offsetWidth; // trigger CSS reflow
+    surface.classList.add('thrown');
+
+    // Play soft audio/sparkles as each photo hits the table
+    const cards = surface.querySelectorAll('.table-throw');
+    cards.forEach((card, idx) => {
+      setTimeout(() => {
+        if (window.soundFx) window.soundFx.heartbeat();
+        if (window.surpriseFx) {
+          const rect = card.getBoundingClientRect();
+          surpriseFx.sparkles(rect.left + rect.width / 2, rect.top + rect.height / 2, 12);
+        }
+      }, 200 + idx * 450);
+    });
+  }
 
   function goToStep(index) {
     if (steps[currentStep]) {
@@ -21,6 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (steps[currentStep]) {
       steps[currentStep].classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (index === 3) {
+        setTimeout(triggerPhotoToss, 350);
+      }
     }
   }
 
@@ -213,90 +237,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 5. 1-by-1 Photo + Letter Interactive Features
-  // a) Photo 3D Flip
-  document.querySelectorAll('.btn-photo-flip, .btn-flip-back-close').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const wrap = btn.closest('.polaroid-wrapper');
-      if (wrap) {
-        wrap.classList.toggle('is-flipped');
-        if (window.soundFx) window.soundFx.heartbeat();
-        if (window.surpriseFx) {
-          const rect = wrap.getBoundingClientRect();
-          surpriseFx.sparkles(rect.left + rect.width / 2, rect.top + rect.height / 2, 20);
-        }
-      }
+  // 5. Re-toss Photos Button
+  const retossBtn = document.getElementById('btn-retoss-photos');
+  if (retossBtn) {
+    retossBtn.addEventListener('click', () => {
+      if (window.soundFx) window.soundFx.pop();
+      triggerPhotoToss();
     });
-  });
+  }
 
-  // Clicking on polaroid itself (except buttons) can also flip
-  document.querySelectorAll('.polaroid-wrapper').forEach(wrap => {
-    wrap.addEventListener('click', (e) => {
-      if (e.target.closest('button')) return;
-      wrap.classList.toggle('is-flipped');
-      if (window.soundFx) window.soundFx.heartbeat();
-      if (window.surpriseFx) {
-        const rect = wrap.getBoundingClientRect();
-        surpriseFx.sparkles(rect.left + rect.width / 2, rect.top + rect.height / 2, 18);
-      }
-    });
-  });
-
-  // b) Photo Like Button (+1000 loves, bursts floating hearts)
-  document.querySelectorAll('.btn-photo-like').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      let count = parseInt(btn.getAttribute('data-count') || '10000', 10);
-      count += 1000;
-      btn.setAttribute('data-count', count);
-      const label = btn.querySelector('.like-label');
-      if (label) label.textContent = `${count.toLocaleString()} Loves ❤️`;
-
+  // 6. Transition to Dedicated Step 4: The Last Letter
+  const openLetterBtn = document.getElementById('btn-open-letter-step');
+  if (openLetterBtn) {
+    openLetterBtn.addEventListener('click', () => {
       if (window.soundFx) window.soundFx.chime();
       if (window.surpriseFx) {
-        const rect = btn.getBoundingClientRect();
-        surpriseFx.heartsBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 25);
+        surpriseFx.confetti(window.innerWidth / 2, window.innerHeight * 0.4, 80);
+        surpriseFx.cracker();
       }
+      goToStep(4);
     });
-  });
+  }
 
-  // c) Wax Seal & Secret P.S. Dropdown
-  document.querySelectorAll('.btn-toggle-secret-ps, .wax-seal-badge').forEach(trigger => {
-    trigger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const parentCard = trigger.closest('.letter-parchment-card');
-      if (parentCard) {
-        const psBox = parentCard.querySelector('.secret-ps-box');
-        if (psBox) {
-          psBox.classList.toggle('open');
-          if (psBox.classList.contains('open')) {
-            if (window.soundFx) window.soundFx.chime();
-            if (window.surpriseFx) {
-              const rect = psBox.getBoundingClientRect();
-              surpriseFx.sparkles(rect.left + rect.width / 2, rect.top + rect.height / 2, 15);
-            }
-          }
-        }
-      }
+  // 7. Back to Photos from Step 4
+  const backPhotosBtn = document.getElementById('btn-back-to-photos');
+  if (backPhotosBtn) {
+    backPhotosBtn.addEventListener('click', () => {
+      if (window.soundFx) window.soundFx.pop();
+      goToStep(3);
     });
-  });
-
-  // d) Smooth Chapter Navigation & Next Chapter buttons
-  document.querySelectorAll('.btn-next-chapter, .chapter-pill').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetId = btn.getAttribute('data-target') || btn.getAttribute('href');
-      if (targetId) {
-        const targetEl = document.querySelector(targetId);
-        if (targetEl) {
-          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          if (window.soundFx) window.soundFx.heartbeat();
-          if (window.surpriseFx) {
-            surpriseFx.sparkles(window.innerWidth / 2, window.innerHeight * 0.3, 15);
-          }
-        }
-      }
-    });
-  });
+  }
 });
